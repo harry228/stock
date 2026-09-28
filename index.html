@@ -72,6 +72,7 @@
             <nav class="flex space-x-6 overflow-x-auto whitespace-nowrap">
                 <a href="#" id="nav-chart-view" class="tab-active pb-1 cursor-pointer"><i class="fa-solid fa-chart-candlestick"></i> 線型走勢與圖表</a>
                 <a href="#" id="nav-table-view" class="hover:text-red-500 pb-1 cursor-pointer"><i class="fa-solid fa-table"></i> 100檔型態總表 (CSV)</a>
+                <a href="#" id="nav-momentum-view" class="hover:text-red-500 pb-1 cursor-pointer"><i class="fa-solid fa-bolt"></i> 量價動能與預估報告</a>
                 <a href="#" class="hover:text-red-500 pb-1">籌碼分析</a>
                 <a href="#" class="hover:text-red-500 pb-1">基本資料</a>
                 <a href="#" class="hover:text-red-500 pb-1">財務報表</a>
@@ -198,7 +199,120 @@
             </div>
         </div>
 
-        <!-- ================= VIEW 2: 100檔型態總表 (CSV 瀏覽) ================= -->
+        <!-- ================= VIEW 3: 台股量價動能趨勢預估報告 ================= -->
+        <div id="momentum-view-panel" class="flex-1 flex flex-col relative w-full h-full bg-[#131722] p-6 overflow-y-auto hidden text-sm">
+            <div class="max-w-6xl mx-auto w-full space-y-6">
+                <div class="flex flex-wrap items-center justify-between border-b border-[#2a2e39] pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-bolt text-red-500"></i>
+                            <span>【^TWII】台股量價效率與波動對稱動能預估報告</span>
+                        </h2>
+                        <p class="text-xs text-gray-400 mt-1">資料更新日期: 2026-09-25 | 來源模型: dynamic_momentum_model.py (支援防 429 與 3% 領先燈號)</p>
+                    </div>
+                    <div>
+                        <a href="./data/momentum_analysis_backtest.csv" download="momentum_analysis_backtest.csv" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded text-xs font-medium transition inline-flex items-center space-x-1">
+                            <i class="fa-solid fa-download"></i><span>下載動能分析 CSV</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 核心指標卡片區 -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-[#181b25] border border-[#2a2e39] rounded-lg p-4 shadow">
+                        <div class="text-xs text-gray-400 font-semibold mb-1">📊 量價效率分析 (VPP)</div>
+                        <div class="space-y-1.5 text-xs">
+                            <div class="flex justify-between"><span class="text-gray-300">上漲段 1 點消耗:</span><span class="text-red-400 font-bold">90,723 股</span></div>
+                            <div class="flex justify-between"><span class="text-gray-300">下跌段 1 點消耗:</span><span class="text-green-400 font-bold">93,280 股</span></div>
+                            <div class="flex justify-between"><span class="text-gray-300">盤整段 1 點消耗:</span><span class="text-yellow-400 font-bold">1,376,197 股</span></div>
+                            <div class="text-[11px] text-gray-400 mt-2 pt-1 border-t border-[#2a2e39]">💡 盤整摩擦力為上漲段的 15.2 倍，為主力籌碼吸納期。</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#181b25] border border-[#2a2e39] rounded-lg p-4 shadow">
+                        <div class="text-xs text-gray-400 font-semibold mb-1">⚡ 短線動能預警 (3% 燈號)</div>
+                        <div class="space-y-1.5 text-xs">
+                            <div class="flex justify-between"><span class="text-gray-300">短線波段狀態:</span><span class="text-green-400 font-bold">短線止跌上漲</span></div>
+                            <div class="flex justify-between"><span class="text-gray-300">轉折起算日期:</span><span class="text-white">2026-09-14 (45,398 點)</span></div>
+                            <div class="flex justify-between"><span class="text-gray-300">短線累計漲幅:</span><span class="text-red-400 font-bold">+5.78%</span></div>
+                            <div class="flex justify-between"><span class="text-gray-300">持續交易天數:</span><span class="text-yellow-400 font-bold">8 天</span></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#181b25] border border-[#2a2e39] rounded-lg p-4 shadow">
+                        <div class="text-xs text-gray-400 font-semibold mb-1">🚀 波段目標與極限預估</div>
+                        <div class="space-y-1.5 text-xs">
+                            <div class="flex justify-between"><span class="text-gray-300">當前收盤指數:</span><span class="text-white font-bold">48,024.60 點</span></div>
+                            <div class="flex justify-between"><span class="text-gray-300">目前波段漲幅:</span><span class="text-red-400 font-bold">+5.52%</span></div>
+                            <div class="flex justify-between"><span class="text-gray-300">歷史極限天花板:</span><span class="text-yellow-400 font-bold">64,858.42 點</span></div>
+                            <div class="text-[11px] text-gray-400 mt-2 pt-1 border-t border-[#2a2e39]">💡 已跨越 80% 勝率安全帶 (48,023 點)，正向 50% 臨界點 (53,606 點) 邁進。</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 歷史勝率與資金規劃表格 -->
+                <div class="bg-[#181b25] border border-[#2a2e39] rounded-lg p-5 shadow">
+                    <h3 class="text-md font-bold text-white mb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-table-list text-red-500"></i>
+                        <span>歷史波段對稱性機率落點與資金曝險規劃表</span>
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead class="bg-[#1e222d] text-gray-300 border-b border-[#2a2e39]">
+                                <tr>
+                                    <th class="p-2.5">歷史勝率 (Win Rate)</th>
+                                    <th class="p-2.5">對稱比率 (Ratio)</th>
+                                    <th class="p-2.5">目標漲幅 (Target Pct)</th>
+                                    <th class="p-2.5">目標點位 (Price Level)</th>
+                                    <th class="p-2.5">目前狀態 (Status)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-[#2a2e39] text-gray-200">
+                                <tr><td class="p-2.5 font-bold text-red-400">100%</td><td class="p-2.5">0.1687</td><td class="p-2.5">+2.48%</td><td class="p-2.5">46,641.43</td><td class="p-2.5 text-green-400">🟢 已達成</td></tr>
+                                <tr><td class="p-2.5 font-bold text-red-400">90%</td><td class="p-2.5">0.1933</td><td class="p-2.5">+2.85%</td><td class="p-2.5">46,806.47</td><td class="p-2.5 text-green-400">🟢 已達成</td></tr>
+                                <tr><td class="p-2.5 font-bold text-red-400">80%</td><td class="p-2.5">0.3750</td><td class="p-2.5">+5.52%</td><td class="p-2.5">48,023.72</td><td class="p-2.5 text-green-400">🟢 已達成</td></tr>
+                                <tr><td class="p-2.5 font-bold text-yellow-400">70%</td><td class="p-2.5">0.5930</td><td class="p-2.5">+8.73%</td><td class="p-2.5">49,484.13</td><td class="p-2.5 text-gray-400">⚪ 未達成</td></tr>
+                                <tr><td class="p-2.5 font-bold text-yellow-400">60%</td><td class="p-2.5">0.9703</td><td class="p-2.5">+14.28%</td><td class="p-2.5">52,011.52</td><td class="p-2.5 text-gray-400">⚪ 未達成</td></tr>
+                                <tr><td class="p-2.5 font-bold text-yellow-400">50%</td><td class="p-2.5">1.2083</td><td class="p-2.5">+17.79%</td><td class="p-2.5">53,606.08</td><td class="p-2.5 text-gray-400">⚪ 未達成</td></tr>
+                                <tr><td class="p-2.5 font-bold text-blue-400">40%</td><td class="p-2.5">1.5163</td><td class="p-2.5">+22.32%</td><td class="p-2.5">55,669.53</td><td class="p-2.5 text-gray-400">⚪ 未達成</td></tr>
+                                <tr><td class="p-2.5 font-bold text-blue-400">30%</td><td class="p-2.5">1.7695</td><td class="p-2.5">+26.05%</td><td class="p-2.5">57,365.60</td><td class="p-2.5 text-gray-400">⚪ 未達成</td></tr>
+                                <tr><td class="p-2.5 font-bold text-purple-400">20%</td><td class="p-2.5">2.0586</td><td class="p-2.5">+30.30%</td><td class="p-2.5">59,302.50</td><td class="p-2.5 text-gray-400">⚪ 未達成</td></tr>
+                                <tr><td class="p-2.5 font-bold text-purple-400">10%</td><td class="p-2.5">3.4062</td><td class="p-2.5">+50.14%</td><td class="p-2.5">68,330.95</td><td class="p-2.5 text-gray-400">⚪ 未達成</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 資金規劃與修正路徑建議 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-[#181b25] border border-[#2a2e39] rounded-lg p-4 shadow">
+                        <h4 class="font-bold text-white mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-shield-halved text-green-500"></i>
+                            <span>資金與曝險規劃建議</span>
+                        </h4>
+                        <ul class="space-y-2 text-xs text-gray-300">
+                            <li><strong>1. 高勝率安全帶 (80%-100%):</strong> 點位 46,641 ~ 48,023 點已完全跨越，為極佳的初始建倉區。</li>
+                            <li><strong>2. 中勝率成熟帶 (50%-70%):</strong> 點位 48,023 ~ 53,606 點。當前價格進入此區，上行阻力開始增大，建議採取「部分利潤落袋」或緊縮停利。</li>
+                            <li><strong>3. 低勝率高利潤帶 (10%-40%):</strong> 點位 53,606 點以上。若向上邁進，應逐步調降部位曝險比例與槓桿以防急跌。</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-[#181b25] border border-[#2a2e39] rounded-lg p-4 shadow">
+                        <h4 class="font-bold text-white mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-triangle-exclamation text-yellow-500"></i>
+                            <span>波段修正路徑與風險預警</span>
+                        </h4>
+                        <ul class="space-y-2 text-xs text-gray-300">
+                            <li><strong>1. 溫和修正路徑:</strong> 依歷史平均修正幅度 (-9.92%) 計算，未來若觸頂回檔，預估修正低點約在 <span class="text-green-400 font-bold">43,379.05 點</span>。</li>
+                            <li><strong>2. 劇烈修正路徑:</strong> 依歷史最大修正幅度 (-19.37%) 計算，預估極端支撐在 <span class="text-red-400 font-bold">38,829.22 點</span>。</li>
+                            <li><strong>3. 時間長度預估:</strong> 本波已持續 7 天，歷史極限上漲天數約 182 天，預估剩餘空間約 175 個交易日。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                <!-- ================= VIEW 2: 100檔型態總表 (CSV 瀏覽) ================= -->
         <div id="table-view-panel" class="flex-1 flex flex-col relative w-full h-full bg-[#131722] p-4 overflow-y-auto hidden">
             <div class="flex flex-wrap items-center justify-between mb-4 gap-2">
                 <div>
@@ -463,10 +577,24 @@
             e.preventDefault();
             navTableView.className = 'tab-active pb-1 cursor-pointer';
             navChartView.className = 'hover:text-red-500 pb-1 cursor-pointer';
+            document.getElementById('nav-momentum-view').className = 'hover:text-red-500 pb-1 cursor-pointer';
             tableViewPanel.classList.remove('hidden');
             chartViewPanel.classList.add('hidden');
+            document.getElementById('momentum-view-panel').classList.add('hidden');
             subNavBar.classList.add('hidden');
             renderFullTable();
+        });
+
+        const navMomentumView = document.getElementById('nav-momentum-view');
+        navMomentumView.addEventListener('click', (e) => {
+            e.preventDefault();
+            navMomentumView.className = 'tab-active pb-1 cursor-pointer';
+            navChartView.className = 'hover:text-red-500 pb-1 cursor-pointer';
+            navTableView.className = 'hover:text-red-500 pb-1 cursor-pointer';
+            document.getElementById('momentum-view-panel').classList.remove('hidden');
+            chartViewPanel.classList.add('hidden');
+            tableViewPanel.classList.add('hidden');
+            subNavBar.classList.add('hidden');
         });
 
         const filterPattern = document.getElementById('filter-pattern');
