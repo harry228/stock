@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.DS_Store
+service-account.json
+data/
+logs/
+output/
+models/
+pattern_recognition/
+
