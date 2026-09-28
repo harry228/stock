@@ -310,81 +310,18 @@
                     </div>
                 </div>
 
-                <!-- 互動式視覺化圖表區 (Web Canvas / Lightweight Charts) -->
+                
+                <!-- 量價效率與動能分析圖 (Matplotlib 高解析度雙面板圖表，含三相色塊與 VPP 曲線) -->
                 <div class="bg-[#181b25] border border-[#2a2e39] rounded-lg p-5 shadow mt-6">
-                    <h3 class="text-md font-bold text-white mb-3 flex items-center space-x-2">
-                        <i class="fa-solid fa-chart-line text-red-500"></i>
-                        <span>【互動式】^TWII 價格區段與動態 VPP 量價效率分析圖</span>
+                    <h3 class="text-md font-bold text-white mb-2 flex items-center space-x-2">
+                        <i class="fa-solid fa-chart-area text-red-500"><span>【^TWII】量價效率與波動對稱動能分析圖 (含紅綠黃三相色塊與 VPP 曲線)</span>
                     </h3>
-                    <p class="text-xs text-gray-400 mb-3">上方：加權指數走勢與三相背景區段（粉: 上漲, 綠: 下跌, 黃: 盤整）；下方：VPP 每點成交量 (對數尺度)。</p>
-                    
-                    <div class="space-y-3">
-                        <div>
-                            <div class="text-xs text-gray-400 mb-1 font-semibold">^TWII Close Price & State Segments</div>
-                            <div id="web-price-chart" class="w-full h-72 rounded border border-[#2a2e39] bg-[#131722]"></div>
-                        </div>
-                        <div>
-                            <div class="text-xs text-gray-400 mb-1 font-semibold">Volume-Per-Point (VPP, Log Scale)</div>
-                            <div id="web-vpp-chart" class="w-full h-40 rounded border border-[#2a2e39] bg-[#131722]"></div>
-                        </div>
+                    <p class="text-xs text-gray-400 mb-4">上方面板：加權指數走勢與背景色塊（粉紅：上漲趨勢波段、綠色：下跌趨勢波段、黃色：盤整吸籌/出貨區段）；下方面板：對數坐標軸之 VPP (Volume-Per-Point) 每日量價效率指標曲線。</p>
+                    <div class="bg-[#131722] p-2 rounded border border-[#2a2e39] flex justify-center overflow-x-auto">
+                        <img src="./assets/market_momentum_analysis.png" alt="台股量價效率與動能分析圖" class="w-full max-w-5xl rounded shadow-lg">
                     </div>
                 </div>
 
-                <script>
-                    async function initMomentumCharts() {
-                        try {
-                            const res = await fetch('./data/momentum_chart_data.json');
-                            const data = await res.json();
-                            
-                            const priceContainer = document.getElementById('web-price-chart');
-                            const vppContainer = document.getElementById('web-vpp-chart');
-                            
-                            if (!priceContainer || !vppContainer) return;
-
-                            const priceChart = LightweightCharts.createChart(priceContainer, {
-                                layout: { background: { type: 'solid', color: '#131722' }, textColor: '#d1d4dc' },
-                                grid: { vertLines: { color: '#1e222d' }, horzLines: { color: '#1e222d' } },
-                                rightPriceScale: { borderColor: '#2a2e39' },
-                                timeScale: { borderColor: '#2a2e39', timeVisible: true },
-                            });
-
-                            const vppChart = LightweightCharts.createChart(vppContainer, {
-                                layout: { background: { type: 'solid', color: '#131722' }, textColor: '#d1d4dc' },
-                                grid: { vertLines: { color: '#1e222d' }, horzLines: { color: '#1e222d' } },
-                                rightPriceScale: { borderColor: '#2a2e39' },
-                                timeScale: { borderColor: '#2a2e39', timeVisible: true },
-                            });
-
-                            const priceSeries = priceChart.addLineSeries({ color: '#ffffff', lineWidth: 2, title: '^TWII Close' });
-                            const priceData = data.prices.map(p => ({ time: p.time, value: p.value }));
-                            priceSeries.setData(priceData);
-
-                            const vppSeries = vppChart.addLineSeries({ color: '#3b82f6', lineWidth: 2, title: 'VPP (Volume per Point)' });
-                            // Map VPP segments to points
-                            const vppData = [];
-                            data.vpp.forEach(v => {
-                                vppData.push({ time: v.time, value: v.vpp });
-                                vppData.push({ time: v.endTime, value: v.vpp });
-                            });
-                            vppSeries.setData(vppData);
-
-                            priceChart.timeScale().fitContent();
-                            vppChart.timeScale().fitContent();
-
-                            // Sync time scales
-                            priceChart.timeScale().subscribeVisibleLogicalRangeChange(range => {
-                                if (range) vppChart.timeScale().setVisibleLogicalRange(range);
-                            });
-                        } catch (err) {
-                            console.error("Failed to load momentum chart data:", err);
-                        }
-                    }
-
-                    // Trigger when momentum tab is opened
-                    document.getElementById('nav-momentum-view').addEventListener('click', () => {
-                        setTimeout(initMomentumCharts, 200);
-                    }, { once: true });
-                </script>
 
 
             </div>
