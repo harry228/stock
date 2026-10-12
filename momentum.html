@@ -53,7 +53,7 @@
                     <i class="fa-solid fa-bolt text-red-500"></i> 台股量價動能趨勢預估報告
                 </h1>
                 <p class="text-sm text-gray-400 mt-1">
-                    標的：加權指數 (^TWII) ｜ 模型：量價效率與波動對稱預估模型
+                    標的：加權指數 (^TWII) ｜ 模型：量價效率與波動對稱預估模型 ｜ 更新日期：2026-10-12
                 </p>
             </div>
             <div class="flex items-center gap-3">
@@ -70,11 +70,11 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div class="card-dark p-4 rounded-lg">
                 <div class="text-xs text-gray-400 mb-1 flex items-center justify-between">
-                    <span>量價效率分析</span>
+                    <span>量價效率分析 (VPP)</span>
                     <i class="fa-solid fa-scale-balanced text-blue-400"></i>
                 </div>
-                <div class="text-lg font-semibold text-white">價量能量累積與釋放</div>
-                <div class="text-xs text-gray-400 mt-2">評估整理期間之換手與動能凝聚程度，判斷趨勢突破臨界點。</div>
+                <div class="text-lg font-semibold text-white">上漲 1點耗量 91,041 股</div>
+                <div class="text-xs text-gray-400 mt-2">盤整段 VPP 為上漲段的 15.1 倍，極端證明盤整區為高摩擦力籌碼吸納期。</div>
             </div>
 
             <div class="card-dark p-4 rounded-lg">
@@ -82,18 +82,70 @@
                     <span>波動對稱預估</span>
                     <i class="fa-solid fa-wave-square text-emerald-400"></i>
                 </div>
-                <div class="text-lg font-semibold text-white">波段幅度與週期對稱</div>
-                <div class="text-xs text-gray-400 mt-2">以歷史多空循環之振幅與斜率對稱性，估算潛在反彈與回檔目標區間。</div>
+                <div class="text-lg font-semibold text-white">上漲趨勢波段中</div>
+                <div class="text-xs text-gray-400 mt-2">目前收盤 49,301.96 點，已進入 50%-70% 中勝率成熟帶。</div>
             </div>
 
             <div class="card-dark p-4 rounded-lg">
                 <div class="text-xs text-gray-400 mb-1 flex items-center justify-between">
-                    <span>多週期濾網</span>
-                    <i class="fa-solid fa-filter text-amber-400"></i>
+                    <span>天花板目標預估</span>
+                    <i class="fa-solid fa-bullseye text-amber-400"></i>
                 </div>
-                <div class="text-lg font-semibold text-white">長短波段轉折過濾</div>
-                <div class="text-xs text-gray-400 mt-2">結合短線轉折燈號與主波段大趨勢，降低假突破與震盪雜訊。</div>
+                <div class="text-lg font-semibold text-white">極限目標 64,858 點</div>
+                <div class="text-xs text-gray-400 mt-2">依歷史極限漲幅 (+42.51%) 投影，預估剩餘時間約 166 個交易日。</div>
             </div>
+        </div>
+
+        <!-- 模型分析摘要文字區塊 -->
+        <div class="card-dark rounded-lg p-6 shadow-xl">
+            <div class="flex items-center justify-between mb-4 border-b border-[#2a2e39] pb-3">
+                <div class="font-medium text-white flex items-center gap-2">
+                    <i class="fa-solid fa-file-lines text-red-500"></i> 完整模型量化分析摘要
+                </div>
+                <span class="text-xs px-2.5 py-1 bg-blue-950 text-blue-400 border border-blue-800 rounded-full">
+                    最新執行數據
+                </span>
+            </div>
+            
+            <pre class="bg-[#131722] p-4 rounded text-xs text-gray-300 font-mono overflow-x-auto whitespace-pre-wrap leading-relaxed border border-[#2a2e39]">
+【^TWII】量價效率與波動對稱動能模型 (改良版改良成果)
+================================================================================
+【1. 量價效率分析 (Volume-Per-Point, VPP)】
+  * 上漲波段: 平均移動 1 點需消耗 91,041 股之成交量
+  * 下跌波段: 平均移動 1 點需消耗 93,280 股之成交量
+  * 盤整波段: 平均移動 1 點需消耗 1,376,197 股之成交量
+  * 💡 學術結論：盤整段之 VPP 為上漲段的 15.1 倍、下跌段的 14.8 倍，極端證明了盤整區確實是高摩擦力的「籌碼吸納/主力出貨期」！
+
+【2-A. 波動等幅對稱分析 (二波段等幅規律 - 上漲趨勢)】
+  * 樣本數: 18 次對接波段
+  * 平均等幅比率 (後波幅 / 前波幅): 138.75%
+  * 波動等幅對稱符合度 (漲跌幅在 80%~125% 內比例): 22.22%
+
+【2-B. 波動等幅對稱分析 (二波段等幅規律 - 下跌趨勢)】
+  * 樣本數: 13 次對接波段
+  * 平均等幅比率 (後波幅 / 前波幅): 173.00%
+  * 波動等幅對稱符合度 (漲跌幅在 80%~125% 內比例): 38.46%
+
+【3. 動能枯竭與接續判斷預測準確度】
+  * 當波段動能（成交量）低於前波同類波段時，預測將進入「盤整或反轉」：回測準確率: 43.33%
+
+  [短線動能預警 (3% 領先燈號)]
+  * 短線波段狀態: 短線止跌上漲 (2026-09-14起，持續 17 天，累計漲幅 +8.60%)
+
+【4. 波段機率落點與資金規劃分析 (Probabilistic Target & Capital Planning)】
+  * 目前波段型態: 【上漲趨勢波段】 (起始點: 45,511.49，當前收盤: 49,301.96)
+  * 💡 歷史勝率與目標點位：
+    - 80% 勝率帶 (48,912.92)：🟢 已達成
+    - 70% 勝率帶 (49,484.13)：接近中
+    - 50% 勝率成熟帶 (53,606.08)：⚪ 未達成
+  * 🛠️ 資金與曝險規劃建議：
+    目前進入中勝率成熟帶 (48,912 ~ 53,606)，上行阻力開始增大，建議採取「部分利潤落袋」或緊縮停利策略，不宜盲目追高重倉。
+  * 🚀 【上漲波段目標預估】
+    - 天花板目標點位：64,858.42 點（依歷史極限漲幅 +42.51% 投影）
+    - 預估剩餘時間：約 166 個交易日
+    - 預估修正低點（溫和/劇烈）：44,879 點 / 40,172 點
+================================================================================
+            </pre>
         </div>
 
         <!-- 圖表展示卡片 -->
