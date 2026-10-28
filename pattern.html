@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台股多空雙向型態掃描報告 (30D+45D)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #131722;
+            color: #d1d4dc;
+        }
+        .tab-active {
+            border-bottom: 3px solid #3b82f6;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        .card-dark {
+            background-color: #1e222d;
+            border: 1px solid #2a2e39;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- 頂部主導覽列 -->
+    <header class="bg-white text-gray-800 border-b border-gray-200 text-sm">
+        <div class="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-between py-2">
+            <nav class="flex space-x-6 overflow-x-auto whitespace-nowrap">
+                <a href="index.html" class="hover:text-blue-600 pb-1 cursor-pointer"><i class="fa-solid fa-chart-candlestick"></i> 線型走勢與圖表</a>
+                <a href="index.html#table" class="hover:text-blue-600 pb-1 cursor-pointer"><i class="fa-solid fa-table"></i> 100檔型態總表 (CSV)</a>
+                <a href="pattern.html" class="tab-active pb-1 cursor-pointer"><i class="fa-solid fa-layer-group"></i> 多空型態掃描 (30D+45D)</a>
+                <a href="momentum.html" class="hover:text-blue-600 pb-1 cursor-pointer"><i class="fa-solid fa-bolt"></i> 台股量價動能報告</a>
+                <a href="gold.html" class="hover:text-blue-600 pb-1 cursor-pointer"><i class="fa-solid fa-coins"></i> 黃金量價動能報告</a>
+                <a href="usdtwd.html" class="hover:text-blue-600 pb-1 cursor-pointer"><i class="fa-solid fa-money-bill-transfer"></i> 美元/台幣動能報告</a>
+                <a href="soybean.html" class="hover:text-blue-600 pb-1 cursor-pointer"><i class="fa-solid fa-seedling"></i> 黃豆量價動能報告</a>
+            </nav>
+            <div class="text-xs text-gray-500 hidden md:block">
+                <span>台股飆股蓄勢與空方破線多週期 K-Means 分類系統</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主內容區塊 -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+        <!-- 頂部標題與狀態 -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#2a2e39] pb-4">
+            <div>
+                <h1 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-blue-500"></i> 台股多空雙向型態掃描報告 (30D+45D)
+                </h1>
+                <p class="text-sm text-gray-400 mt-1">
+                    標的：台股精選 100 檔 ｜ 模型：K-Means (10大群集) 多週期相似度配對 ｜ 更新日期：2026-10-28
+                </p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="px-4 py-2 bg-[#2a2e39] hover:bg-[#363c4e] text-white rounded text-sm transition">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> 返回主儀表板
+                </a>
+                <a href="data/pattern_scan_report_30.csv" download class="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition">
+                    <i class="fa-solid fa-download mr-1"></i> 30D CSV
+                </a>
+                <a href="data/pattern_scan_report_45.csv" download class="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-sm transition">
+                    <i class="fa-solid fa-download mr-1"></i> 45D CSV
+                </a>
+            </div>
+        </div>
+
+        <!-- 說明指標卡片 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="card-dark p-4 rounded-lg">
+                <div class="text-xs text-gray-400 mb-1 flex items-center justify-between">
+                    <span>30D 短波段型態</span>
+                    <i class="fa-solid fa-chart-line text-blue-400"></i>
+                </div>
+                <div class="text-lg font-semibold text-white">短線蓄勢與爆發</div>
+                <div class="text-xs text-gray-400 mt-2">針對最近 30 交易日 K 線形態進特徵萃取，捕捉短波段突破與破線訊號。</div>
+            </div>
+
+            <div class="card-dark p-4 rounded-lg">
+                <div class="text-xs text-gray-400 mb-1 flex items-center justify-between">
+                    <span>45D 中波段型態</span>
+                    <i class="fa-solid fa-cubes text-purple-400"></i>
+                </div>
+                <div class="text-lg font-semibold text-white">中線打底與轉折</div>
+                <div class="text-xs text-gray-400 mt-2">涵蓋 45 交易日大結構型態，辨識 W底打底、M頭雙頂等中線底部/頭部結構。</div>
+            </div>
+
+            <div class="card-dark p-4 rounded-lg">
+                <div class="text-xs text-gray-400 mb-1 flex items-center justify-between">
+                    <span>雙週期共振 (30D+45D)</span>
+                    <i class="fa-solid fa-bullseye text-amber-400"></i>
+                </div>
+                <div class="text-lg font-semibold text-white">高勝率多空鎖定</div>
+                <div class="text-xs text-gray-400 mt-2">同時在短波段與中波段出現相同方向之蓄勢待發/破線訊號，大幅提升佈局勝率。</div>
+            </div>
+        </div>
+
+        <!-- 模型分析摘要文字區塊 -->
+        <div class="card-dark rounded-lg p-6 shadow-xl">
+            <div class="flex items-center justify-between mb-4 border-b border-[#2a2e39] pb-3">
+                <div class="font-medium text-white flex items-center gap-2">
+                    <i class="fa-solid fa-file-lines text-blue-400"></i> 完整多空型態掃描摘要
+                </div>
+                <span class="text-xs px-2.5 py-1 bg-blue-950 text-blue-400 border border-blue-800 rounded-full">
+                    最新執行數據
+                </span>
+            </div>
+            
+            <pre id="pattern-report-text" class="bg-[#131722] p-4 rounded text-xs text-gray-300 font-mono overflow-x-auto whitespace-pre-wrap leading-relaxed border border-[#2a2e39]">
+載入中...
+            </pre>
+        </div>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="bg-[#1e222d] border-t border-[#2a2e39] py-4 mt-auto text-center text-xs text-gray-500">
+        <p>台股多空雙向型態掃描與量化分析系統 ｜ 自動化排程推播與 GitHub Pages 網頁儀表板</p>
+    </footer>
+
+</body>
+</html>
